@@ -1,0 +1,16 @@
+[
+{
+  "modid": "wynnforge",
+  "name": "Wynnforge",
+  "description": "Wynncraft Improvement Mod",
+  "version": "${version}",
+  "mcversion": "${mcversion}",
+  "url": "https://minecraft.curseforge.com/projects/wynnforge",
+  "updateUrl": "",
+  "authorList": ["Tiffit"],
+  "credits": "Tiffit",
+  "logoFile": "",
+  "screenshots": [],
+  "dependencies": []
+}
+]
