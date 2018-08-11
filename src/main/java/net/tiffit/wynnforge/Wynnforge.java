@@ -17,6 +17,7 @@ import net.minecraft.util.text.ChatType;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.common.config.ConfigCategory;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
@@ -34,8 +35,10 @@ import net.tiffit.wynnforge.module.ModuleInstantConnect;
 import net.tiffit.wynnforge.module.ModuleItemLock;
 import net.tiffit.wynnforge.module.ModuleJourneymap;
 import net.tiffit.wynnforge.module.ModuleMusicVisualizer;
+import net.tiffit.wynnforge.module.ModulePlayerInfo;
 import net.tiffit.wynnforge.module.ModuleQuickDrop;
 import net.tiffit.wynnforge.module.ModuleQuickParty;
+import net.tiffit.wynnforge.module.ModuleUsefulCompass;
 import net.tiffit.wynnforge.module.ModuleWorldSelection;
 import net.tiffit.wynnforge.module.ModuleXpPercent;
 import net.tiffit.wynnforge.wynnapi.items.ItemDB;
@@ -45,7 +48,7 @@ import net.tiffit.wynnforge.wynnapi.territories.TerritoryDB;
 public class Wynnforge {
 	public static final String MODID = "wynnforge";
 	public static final String NAME = "Wynnforge";
-	public static final String VERSION = "0.0.1";
+	public static final String VERSION = "0.0.2";
 
 	private static List<ModuleBase> MODULES = new ArrayList<ModuleBase>();
 	
@@ -74,6 +77,8 @@ public class Wynnforge {
 		registerModule(new ModuleBetterShops());
 		registerModule(new ModuleMusicVisualizer());
 		registerModule(new ModuleQuickParty());
+		registerModule(new ModuleUsefulCompass());
+		registerModule(new ModulePlayerInfo());
 		
 		for(ModuleBase mod : MODULES){
 			MinecraftForge.EVENT_BUS.register(mod);
@@ -85,7 +90,11 @@ public class Wynnforge {
 	private void registerModule(ModuleBase m){
 		if(ConfigManager.isModuleLoaded(m.getConfigName(), m.defaultEnabled())){
 			MODULES.add(m);
+			ConfigCategory cat = ConfigManager.getCategory(m.getConfigName());
+			m.loadConfig(cat);
+			if(cat.isEmpty())ConfigManager.getConfig().removeCategory(cat);
 		}
+		ConfigManager.save();
 	}
 
 	@EventHandler

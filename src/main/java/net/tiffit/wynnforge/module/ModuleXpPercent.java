@@ -16,6 +16,7 @@ import net.minecraft.client.resources.IResourceManager;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.client.event.RenderGameOverlayEvent.ElementType;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
@@ -37,6 +38,12 @@ public class ModuleXpPercent extends ModuleBase {
 	
 	public static KeyBinding xpMode;
 	public static int mode = 0;
+	
+	private static float lastXp = -1;
+	private static int lastXpLevel = -1;
+	private static float lastXpOrigin = -1;
+	private static long lastXpTime = 0;
+	private static boolean trackingXp = false;
 
 	@Override
 	public void init(FMLInitializationEvent e) {
@@ -77,18 +84,31 @@ public class ModuleXpPercent extends ModuleBase {
 			if (mc.player.experienceLevel > 0) {
 				ScaledResolution sr = new ScaledResolution(mc);
 				int levelXp = LEVEL_XP.get(mc.player.experienceLevel);
-				if (mode == 0) {
-					String xp = "XP: " + format.format((int) (mc.player.experience * levelXp)) + "/" + format.format(levelXp);
-					mc.fontRenderer.drawStringWithShadow(xp, sr.getScaledWidth() / 2 - 9, sr.getScaledHeight() - 47, 8453920);
+				String xp = "";
+				if (mode == 0)xp = "XP: " + format.format((int) (mc.player.experience * levelXp)) + "/" + format.format(levelXp);
+				if(mode == 1)xp = "XP: " + ItemStack.DECIMALFORMAT.format(mc.player.experience * 100) + "%";
+				if(mode == 2)xp = format.format(levelXp - (int) (mc.player.experience * levelXp)) + "XP Remaining";
+				if(lastXpLevel == -1) {
+					lastXpLevel = mc.player.experienceLevel;
+					lastXp = lastXpOrigin = mc.player.experience;
 				}
-				if(mode == 1){
-					String xpPercent = "XP: " + ItemStack.DECIMALFORMAT.format(mc.player.experience * 100) + "%";
-					mc.fontRenderer.drawStringWithShadow(xpPercent, sr.getScaledWidth() / 2 - 9, sr.getScaledHeight() - 47, 8453920);
+				if(lastXp != mc.player.experience) {
+					float xpcache = lastXp;
+					lastXp = mc.player.experience;
+					lastXpTime = mc.getSystemTime();
+					if(!trackingXp) {
+						lastXpOrigin = xpcache;
+						trackingXp = true;
+					}
 				}
-				if(mode == 2){
-					String xp = format.format(levelXp - (int) (mc.player.experience * levelXp)) + "XP Remaining";
-					mc.fontRenderer.drawStringWithShadow(xp, sr.getScaledWidth() / 2 - 9, sr.getScaledHeight() - 47, 8453920);
+				if(lastXpLevel != mc.player.experienceLevel || mc.getSystemTime() - lastXpTime > 5000) {
+					trackingXp = false;
+					lastXpLevel = mc.player.experienceLevel;
 				}
+				if(trackingXp) {
+					xp += TextFormatting.DARK_GREEN + " [+" + format.format((int)((mc.player.experience * levelXp) - (levelXp * lastXpOrigin))) + "]";
+				}
+				if(!xp.isEmpty())mc.fontRenderer.drawStringWithShadow(xp, sr.getScaledWidth() / 2 - 9, sr.getScaledHeight() - 47, 8453920);
 			}
 		}
 	}

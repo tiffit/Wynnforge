@@ -1,5 +1,6 @@
 package net.tiffit.wynnforge.module;
 
+import net.minecraftforge.common.config.ConfigCategory;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 
 public class ModuleBase {
@@ -23,5 +24,7 @@ public class ModuleBase {
 	public boolean defaultEnabled() {
 		return true;
 	}
+	
+	public void loadConfig(ConfigCategory cat) {}
 	
 }

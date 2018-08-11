@@ -11,6 +11,7 @@ import journeymap.client.api.event.ClientEvent;
 import journeymap.client.api.model.MapPolygon;
 import journeymap.client.api.model.ShapeProperties;
 import net.minecraft.util.math.BlockPos;
+import net.tiffit.wynnforge.ConfigManager;
 import net.tiffit.wynnforge.Wynnforge;
 import net.tiffit.wynnforge.wynnapi.territories.TerritoryDB;
 import net.tiffit.wynnforge.wynnapi.territories.WynnTerritory;
@@ -23,9 +24,9 @@ public class JMPlugin implements IClientPlugin {
 	
 	@Override
 	public void initialize(IClientAPI api) {
+		if(!ConfigManager.isModuleLoaded("journey_map", true))return;
 		this.api = api;
 		Random r = new Random();
-		api.subscribe(Wynnforge.MODID, EnumSet.of(ClientEvent.Type.DISPLAY_UPDATE));
 		for(WynnTerritory t : TerritoryDB.territories){
 			if(t.location == null)continue;
 			TerritoryLoc l = t.location;

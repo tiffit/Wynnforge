@@ -19,6 +19,7 @@ public class LocalData {
 			tag = new NBTTagCompound();
 			try {
 				f.createNewFile();
+				CompressedStreamTools.write(tag, f);
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -36,6 +37,7 @@ public class LocalData {
 	}
 	
 	public static NBTTagCompound getTag(String name){
+		if(tag == null)return new NBTTagCompound();
 		if(name == null)return tag;
 		if(tag.hasKey(name))
 			return tag.getCompoundTag(name);
