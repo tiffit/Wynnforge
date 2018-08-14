@@ -17,8 +17,10 @@ import net.minecraftforge.fml.common.gameevent.InputEvent.KeyInputEvent;
 import net.tiffit.wynnforge.TimedRunnables;
 import net.tiffit.wynnforge.WFNetHandler;
 import net.tiffit.wynnforge.Wynnforge;
+import net.tiffit.wynnforge.module.ModuleBase.ModuleClass;
 import net.tiffit.wynnforge.utils.PotionInfo;
 
+@ModuleClass
 public class ModuleQuickDrop extends ModuleBase {
 
 	public ModuleQuickDrop() {

@@ -7,7 +7,9 @@ import net.minecraft.client.multiplayer.ServerData;
 import net.minecraft.client.multiplayer.ServerData.ServerResourceMode;
 import net.minecraftforge.client.event.GuiOpenEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.tiffit.wynnforge.module.ModuleBase.ModuleClass;
 
+@ModuleClass
 public class ModuleInstantConnect extends ModuleBase{
 
 	public ModuleInstantConnect() {

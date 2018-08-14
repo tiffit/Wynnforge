@@ -14,7 +14,9 @@ import net.minecraftforge.client.ClientCommandHandler;
 import net.minecraftforge.client.IClientCommand;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.tiffit.wynnforge.data.FriendsManager;
+import net.tiffit.wynnforge.module.ModuleBase.ModuleClass;
 
+@ModuleClass
 public class ModuleQuickParty extends ModuleBase {
 
 	public ModuleQuickParty() {

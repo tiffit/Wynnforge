@@ -7,7 +7,9 @@ import net.minecraft.util.text.ChatType;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.tiffit.wynnforge.module.ModuleBase.ModuleClass;
 
+@ModuleClass(reqMod = "journeymap")
 public class ModuleJourneymap extends ModuleBase {
 	
 	public ModuleJourneymap() {

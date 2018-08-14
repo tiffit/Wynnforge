@@ -1,8 +1,5 @@
 package net.tiffit.wynnforge.module;
 
-import java.util.Arrays;
-import java.util.List;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.inventory.GuiChest;
 import net.minecraft.client.gui.inventory.GuiInventory;
@@ -12,8 +9,10 @@ import net.minecraft.entity.passive.EntityVillager;
 import net.minecraftforge.client.event.GuiScreenEvent.DrawScreenEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent.EntityInteractSpecific;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.tiffit.wynnforge.module.ModuleBase.ModuleClass;
 import net.tiffit.wynnforge.utils.WFUtils;
 
+@ModuleClass
 public class ModuleBetterShops extends ModuleBase {
 
 	private EntityLivingBase lastInteract = null;

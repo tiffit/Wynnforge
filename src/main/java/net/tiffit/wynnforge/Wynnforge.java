@@ -2,6 +2,7 @@ package net.tiffit.wynnforge;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import org.apache.logging.log4j.Logger;
 
@@ -19,8 +20,10 @@ import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.ConfigCategory;
 import net.minecraftforge.common.config.Configuration;
+import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
+import net.minecraftforge.fml.common.discovery.ASMDataTable.ASMData;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
@@ -29,18 +32,7 @@ import net.minecraftforge.fml.common.network.FMLNetworkEvent.ClientConnectedToSe
 import net.tiffit.wynnforge.data.FriendsManager;
 import net.tiffit.wynnforge.data.LocalData;
 import net.tiffit.wynnforge.module.ModuleBase;
-import net.tiffit.wynnforge.module.ModuleBetterShops;
-import net.tiffit.wynnforge.module.ModuleInfo;
-import net.tiffit.wynnforge.module.ModuleInstantConnect;
-import net.tiffit.wynnforge.module.ModuleItemLock;
-import net.tiffit.wynnforge.module.ModuleJourneymap;
-import net.tiffit.wynnforge.module.ModuleMusicVisualizer;
-import net.tiffit.wynnforge.module.ModulePlayerInfo;
-import net.tiffit.wynnforge.module.ModuleQuickDrop;
-import net.tiffit.wynnforge.module.ModuleQuickParty;
-import net.tiffit.wynnforge.module.ModuleUsefulCompass;
-import net.tiffit.wynnforge.module.ModuleWorldSelection;
-import net.tiffit.wynnforge.module.ModuleXpPercent;
+import net.tiffit.wynnforge.module.ModuleBase.ModuleClass;
 import net.tiffit.wynnforge.wynnapi.items.ItemDB;
 import net.tiffit.wynnforge.wynnapi.territories.TerritoryDB;
 
@@ -48,7 +40,7 @@ import net.tiffit.wynnforge.wynnapi.territories.TerritoryDB;
 public class Wynnforge {
 	public static final String MODID = "wynnforge";
 	public static final String NAME = "Wynnforge";
-	public static final String VERSION = "0.1.0";
+	public static final String VERSION = "0.1.1";
 
 	private static List<ModuleBase> MODULES = new ArrayList<ModuleBase>();
 	
@@ -59,7 +51,6 @@ public class Wynnforge {
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event) {
 		MinecraftForge.EVENT_BUS.register(this);
-		
 		logger = event.getModLog();
 		
 		ConfigManager.load(new Configuration(event.getSuggestedConfigurationFile()));
@@ -67,18 +58,19 @@ public class Wynnforge {
 		LocalData.loadData();
 		FriendsManager.load();
 		
-		registerModule(new ModuleInstantConnect());
-		registerModule(new ModuleWorldSelection());
-		registerModule(new ModuleXpPercent());
-		registerModule(new ModuleItemLock());
-		registerModule(new ModuleQuickDrop());
-		registerModule(new ModuleInfo());
-		registerModule(new ModuleJourneymap());
-		registerModule(new ModuleBetterShops());
-		registerModule(new ModuleMusicVisualizer());
-		registerModule(new ModuleQuickParty());
-		registerModule(new ModuleUsefulCompass());
-		registerModule(new ModulePlayerInfo());
+		Set<ASMData> moduleASM = event.getAsmData().getAll(ModuleClass.class.getName());
+		for(ASMData data : moduleASM) {
+			try {
+				Class<?> c = Class.forName(data.getClassName());
+				if(ModuleBase.class.isAssignableFrom(c)) {
+					String reqMod = (String)data.getAnnotationInfo().get("reqMod");
+					if(reqMod == null || Loader.isModLoaded(reqMod))registerModule((ModuleBase) c.newInstance());
+				}
+			} catch (ClassNotFoundException | InstantiationException | IllegalAccessException e) {
+				e.printStackTrace();
+			}
+			
+		}
 		
 		for(ModuleBase mod : MODULES){
 			MinecraftForge.EVENT_BUS.register(mod);

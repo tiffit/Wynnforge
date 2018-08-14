@@ -3,20 +3,15 @@ package net.tiffit.wynnforge.module;
 import java.awt.Color;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiButton;
-import net.minecraft.client.gui.GuiScreen;
-import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.item.ItemCompass;
-import net.minecraft.network.play.server.SPacketSoundEffect;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.client.event.RenderGameOverlayEvent.ElementType;
 import net.minecraftforge.client.event.sound.SoundEvent.SoundSourceEvent;
-import net.minecraftforge.event.world.NoteBlockEvent.Instrument;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.tiffit.wynnforge.PacketRecieveEvent;
+import net.tiffit.wynnforge.module.ModuleBase.ModuleClass;
 import net.tiffit.wynnforge.utils.WFUtils;
 
+@ModuleClass
 public class ModuleMusicVisualizer extends ModuleBase {
 
 	public ModuleMusicVisualizer() {
@@ -50,7 +45,6 @@ public class ModuleMusicVisualizer extends ModuleBase {
 			case "bass": c = new Color(1f, 0, 1f); break;
 			}
 			Minecraft mc = Minecraft.getMinecraft();
-			ScaledResolution sr = new ScaledResolution(mc);
 			int alpha = (int)(lastPitch*100) + 25;
 			long curTime = System.currentTimeMillis();
 			if(curTime - lastNoteTime > 1000) {

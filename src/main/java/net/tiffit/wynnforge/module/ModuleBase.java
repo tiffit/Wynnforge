@@ -1,5 +1,10 @@
 package net.tiffit.wynnforge.module;
 
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
+
 import net.minecraftforge.common.config.ConfigCategory;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 
@@ -26,5 +31,11 @@ public class ModuleBase {
 	}
 	
 	public void loadConfig(ConfigCategory cat) {}
+	
+	@Retention(RetentionPolicy.RUNTIME)
+	@Target(ElementType.TYPE)
+	public static @interface ModuleClass{
+		String reqMod() default "";
+	}
 	
 }

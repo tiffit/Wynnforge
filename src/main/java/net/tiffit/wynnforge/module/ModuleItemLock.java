@@ -8,8 +8,10 @@ import net.minecraft.network.play.client.CPacketPlayerDigging.Action;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.tiffit.wynnforge.PacketSendEvent;
+import net.tiffit.wynnforge.module.ModuleBase.ModuleClass;
 import net.tiffit.wynnforge.wynnapi.items.ItemDB;
 
+@ModuleClass
 public class ModuleItemLock extends ModuleBase {
 
 	public ModuleItemLock() {

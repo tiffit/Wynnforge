@@ -7,18 +7,18 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.client.event.RenderGameOverlayEvent.ElementType;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.tiffit.wynnforge.module.ModuleBase.ModuleClass;
 import net.tiffit.wynnforge.utils.PotionInfo;
 import net.tiffit.wynnforge.utils.WFUtils;
 
+@ModuleClass
 public class ModuleInfo extends ModuleBase {
 
 	public ModuleInfo() {
@@ -76,7 +76,7 @@ public class ModuleInfo extends ModuleBase {
 							int charges = 0;
 							for(PotionInfo info : entry.getValue())charges += info.charges;
 							int amount = entry.getValue().get(0).amount*charges;
-							mc.fontRenderer.drawStringWithShadow(charges + "x lvl" + (entry.getKey() * 5) + " (" + amount + ")", 20, yPos+=10, 0xffff5555);
+							mc.fontRenderer.drawStringWithShadow(charges + "x L" + (entry.getKey() * 5) + " (" + amount + ")", 20, yPos+=10, 0xffff5555);
 						}
 					}
 				}

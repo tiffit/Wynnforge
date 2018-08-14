@@ -2,10 +2,7 @@ package net.tiffit.wynnforge.gui.compass;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
-import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiListExtended.IGuiListEntry;
-import net.minecraft.client.gui.GuiListWorldSelectionEntry;
-import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec2f;
 import net.tiffit.wynnforge.wynnapi.territories.WynnTerritory;
 import net.tiffit.wynnforge.wynnapi.territories.WynnTerritory.TerritoryLoc;

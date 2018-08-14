@@ -1,20 +1,13 @@
 package net.tiffit.wynnforge.gui.compass;
 
-import java.util.Comparator;
 import java.util.List;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Ordering;
 
-import akka.util.Collections;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiListExtended;
-import net.minecraft.client.gui.GuiListWorldSelection;
-import net.minecraft.client.gui.GuiListWorldSelectionEntry;
 import net.minecraft.client.gui.GuiPlayerTabOverlay;
-import net.minecraft.client.gui.GuiWorldSelection;
-import net.minecraft.client.network.NetworkPlayerInfo;
-import net.minecraft.item.ItemCompass;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec2f;
 import net.minecraft.util.text.TextFormatting;

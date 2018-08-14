@@ -1,24 +1,13 @@
 package net.tiffit.wynnforge.module;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
 import org.lwjgl.input.Keyboard;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
-import net.minecraft.command.CommandNotFoundException;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.command.WrongUsageException;
-import net.minecraft.command.server.CommandTeleport;
-import net.minecraft.inventory.ClickType;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagList;
-import net.minecraft.network.play.client.CPacketClickWindow;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextFormatting;
@@ -28,15 +17,12 @@ import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.InputEvent.KeyInputEvent;
-import net.tiffit.wynnforge.TimedRunnables;
-import net.tiffit.wynnforge.WFNetHandler;
 import net.tiffit.wynnforge.Wynnforge;
-import net.tiffit.wynnforge.data.FriendsManager;
 import net.tiffit.wynnforge.gui.compass.GuiCompass;
-import net.tiffit.wynnforge.module.ModuleQuickParty.QuickPartyCommand;
-import net.tiffit.wynnforge.utils.PotionInfo;
+import net.tiffit.wynnforge.module.ModuleBase.ModuleClass;
 import net.tiffit.wynnforge.utils.WFUtils;
 
+@ModuleClass
 public class ModuleUsefulCompass extends ModuleBase {
 
 	public ModuleUsefulCompass() {

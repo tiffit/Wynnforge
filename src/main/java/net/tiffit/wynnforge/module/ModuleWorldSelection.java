@@ -8,7 +8,9 @@ import net.minecraft.network.play.server.SPacketWindowItems;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.tiffit.wynnforge.PacketRecieveEvent;
 import net.tiffit.wynnforge.gui.GuiWorldSelection;
+import net.tiffit.wynnforge.module.ModuleBase.ModuleClass;
 
+@ModuleClass
 public class ModuleWorldSelection extends ModuleBase {
 
 	public ModuleWorldSelection() {

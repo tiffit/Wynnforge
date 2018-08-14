@@ -1,6 +1,5 @@
 package net.tiffit.wynnforge.journeymap;
 
-import java.util.EnumSet;
 import java.util.Random;
 
 import journeymap.client.api.ClientPlugin;

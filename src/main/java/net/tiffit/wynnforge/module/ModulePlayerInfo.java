@@ -8,7 +8,9 @@ import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.client.event.RenderPlayerEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.tiffit.wynnforge.data.FriendsManager;
+import net.tiffit.wynnforge.module.ModuleBase.ModuleClass;
 
+@ModuleClass
 public class ModulePlayerInfo extends ModuleBase {
 
 	public ModulePlayerInfo() {

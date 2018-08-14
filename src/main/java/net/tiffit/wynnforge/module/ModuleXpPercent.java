@@ -25,7 +25,9 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.InputEvent.KeyInputEvent;
 import net.tiffit.wynnforge.Wynnforge;
 import net.tiffit.wynnforge.data.LocalData;
+import net.tiffit.wynnforge.module.ModuleBase.ModuleClass;
 
+@ModuleClass
 public class ModuleXpPercent extends ModuleBase {
 
 	public ModuleXpPercent() {
@@ -95,13 +97,13 @@ public class ModuleXpPercent extends ModuleBase {
 				if(lastXp != mc.player.experience) {
 					float xpcache = lastXp;
 					lastXp = mc.player.experience;
-					lastXpTime = mc.getSystemTime();
+					lastXpTime = Minecraft.getSystemTime();
 					if(!trackingXp) {
 						lastXpOrigin = xpcache;
 						trackingXp = true;
 					}
 				}
-				if(lastXpLevel != mc.player.experienceLevel || mc.getSystemTime() - lastXpTime > 5000) {
+				if(lastXpLevel != mc.player.experienceLevel || Minecraft.getSystemTime() - lastXpTime > 5000) {
 					trackingXp = false;
 					lastXpLevel = mc.player.experienceLevel;
 				}

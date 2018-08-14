@@ -5,8 +5,6 @@ import java.io.IOException;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.GuiTextField;
-import net.minecraft.client.gui.GuiWorldSelection;
-import net.tiffit.wynnforge.wynnapi.territories.WynnTerritory;
 
 public class GuiCompass extends GuiScreen {
 
