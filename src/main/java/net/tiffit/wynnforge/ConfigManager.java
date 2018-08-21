@@ -1,14 +1,15 @@
 package net.tiffit.wynnforge;
 
-import java.util.HashMap;
-
 import net.minecraftforge.common.config.ConfigCategory;
 import net.minecraftforge.common.config.Configuration;
+import net.minecraftforge.fml.client.event.ConfigChangedEvent.OnConfigChangedEvent;
+import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
+@Mod.EventBusSubscriber
 public class ConfigManager {
 
 	private static Configuration conf;
-	private static HashMap<String, Boolean> modules = new HashMap<String, Boolean>();
 	
 	public static void load(Configuration config){
 		conf = config;
@@ -17,7 +18,6 @@ public class ConfigManager {
 	}
 	
 	public static boolean isModuleLoaded(String name, boolean def){
-		if(modules.containsKey(name))return modules.get(name);
 		boolean loaded = conf.get("Modules", name, def).getBoolean();
 		save();
 		return loaded;
@@ -33,6 +33,14 @@ public class ConfigManager {
 	
 	public static Configuration getConfig() {
 		return conf;
+	}
+	
+	@SubscribeEvent
+	public static void onConfigGuiEdited(OnConfigChangedEvent e) {
+		if (e.getModID().equals(Wynnforge.MODID)) {
+			conf.save();
+			Wynnforge.setupModules();
+		}
 	}
 	
 }

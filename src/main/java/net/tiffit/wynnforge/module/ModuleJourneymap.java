@@ -8,9 +8,14 @@ import net.minecraft.util.text.TextComponentString;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.tiffit.wynnforge.module.ModuleBase.ModuleClass;
+import net.tiffit.wynnforge.utils.ConfigHelper;
 
 @ModuleClass(reqMod = "journeymap")
 public class ModuleJourneymap extends ModuleBase {
+	
+	//Config
+	private boolean change_coordinates;
+	public static boolean draw_on_map;
 	
 	public ModuleJourneymap() {
 		super("Journey Map");
@@ -20,7 +25,7 @@ public class ModuleJourneymap extends ModuleBase {
 	
 	@SubscribeEvent
 	public void onMessage(ClientChatReceivedEvent e){
-		if (e.getType() == ChatType.SYSTEM){
+		if (e.getType() == ChatType.SYSTEM && change_coordinates){
 			String message = e.getMessage().getFormattedText();
 			Matcher m = coordPattern.matcher(message);
 			boolean found = false;
@@ -40,6 +45,12 @@ public class ModuleJourneymap extends ModuleBase {
 			}
 			if(found)e.setMessage(new TextComponentString(message).setStyle(e.getMessage().getStyle().createShallowCopy()));
 		}
+	}
+	
+	@Override
+	public void loadConfig(ConfigHelper cat) {
+		change_coordinates = cat.getBoolean("change_coordinates", true, null);
+		draw_on_map = cat.getBoolean("draw_on_map", true, null);
 	}
 
 }

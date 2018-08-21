@@ -20,7 +20,6 @@ import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.client.event.RenderGameOverlayEvent.ElementType;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
-import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.InputEvent.KeyInputEvent;
 import net.tiffit.wynnforge.Wynnforge;
@@ -37,10 +36,10 @@ public class ModuleXpPercent extends ModuleBase {
 	private static List<Integer> LEVEL_XP = new ArrayList<Integer>();
 
 	private static DecimalFormat format = new DecimalFormat("#,###");
-	
+
 	public static KeyBinding xpMode;
 	public static int mode = 0;
-	
+
 	private static float lastXp = -1;
 	private static int lastXpLevel = -1;
 	private static float lastXpOrigin = -1;
@@ -48,11 +47,12 @@ public class ModuleXpPercent extends ModuleBase {
 	private static boolean trackingXp = false;
 
 	@Override
-	public void init(FMLInitializationEvent e) {
+	public void loadModule() {
 		mode = LocalData.getTag(this).getInteger("mode");
-		
+
 		IResourceManager man = Minecraft.getMinecraft().getResourceManager();
 		try {
+			LEVEL_XP.clear();
 			InputStream is = man.getResource(new ResourceLocation(Wynnforge.MODID, "xpvalues.txt")).getInputStream();
 			BufferedReader reader = new BufferedReader(new InputStreamReader(is));
 			String line = null;
@@ -63,9 +63,10 @@ public class ModuleXpPercent extends ModuleBase {
 		} catch (IOException e1) {
 			e1.printStackTrace();
 		}
-
-		xpMode = new KeyBinding("Change XP Mode", Keyboard.KEY_NUMPAD1, "Wynnforge");
-		ClientRegistry.registerKeyBinding(xpMode);
+		if (xpMode == null) {
+			xpMode = new KeyBinding("Change XP Mode", Keyboard.KEY_NUMPAD1, "Wynnforge");
+			ClientRegistry.registerKeyBinding(xpMode);
+		}
 	}
 
 	@SubscribeEvent
@@ -87,30 +88,34 @@ public class ModuleXpPercent extends ModuleBase {
 				ScaledResolution sr = new ScaledResolution(mc);
 				int levelXp = LEVEL_XP.get(mc.player.experienceLevel);
 				String xp = "";
-				if (mode == 0)xp = "XP: " + format.format((int) (mc.player.experience * levelXp)) + "/" + format.format(levelXp);
-				if(mode == 1)xp = "XP: " + ItemStack.DECIMALFORMAT.format(mc.player.experience * 100) + "%";
-				if(mode == 2)xp = format.format(levelXp - (int) (mc.player.experience * levelXp)) + "XP Remaining";
-				if(lastXpLevel == -1) {
+				if (mode == 0)
+					xp = "XP: " + format.format((int) (mc.player.experience * levelXp)) + "/" + format.format(levelXp);
+				if (mode == 1)
+					xp = "XP: " + ItemStack.DECIMALFORMAT.format(mc.player.experience * 100) + "%";
+				if (mode == 2)
+					xp = format.format(levelXp - (int) (mc.player.experience * levelXp)) + "XP Remaining";
+				if (lastXpLevel == -1) {
 					lastXpLevel = mc.player.experienceLevel;
 					lastXp = lastXpOrigin = mc.player.experience;
 				}
-				if(lastXp != mc.player.experience) {
+				if (lastXp != mc.player.experience) {
 					float xpcache = lastXp;
 					lastXp = mc.player.experience;
 					lastXpTime = Minecraft.getSystemTime();
-					if(!trackingXp) {
+					if (!trackingXp) {
 						lastXpOrigin = xpcache;
 						trackingXp = true;
 					}
 				}
-				if(lastXpLevel != mc.player.experienceLevel || Minecraft.getSystemTime() - lastXpTime > 5000) {
+				if (lastXpLevel != mc.player.experienceLevel || Minecraft.getSystemTime() - lastXpTime > 5000) {
 					trackingXp = false;
 					lastXpLevel = mc.player.experienceLevel;
 				}
-				if(trackingXp) {
-					xp += TextFormatting.DARK_GREEN + " [+" + format.format((int)((mc.player.experience * levelXp) - (levelXp * lastXpOrigin))) + "]";
+				if (trackingXp) {
+					xp += TextFormatting.DARK_GREEN + " [+" + format.format((int) ((mc.player.experience * levelXp) - (levelXp * lastXpOrigin))) + "]";
 				}
-				if(!xp.isEmpty())mc.fontRenderer.drawStringWithShadow(xp, sr.getScaledWidth() / 2 - 9, sr.getScaledHeight() - 47, 8453920);
+				if (!xp.isEmpty())
+					mc.fontRenderer.drawStringWithShadow(xp, sr.getScaledWidth() / 2 - 9, sr.getScaledHeight() - 47, 8453920);
 			}
 		}
 	}

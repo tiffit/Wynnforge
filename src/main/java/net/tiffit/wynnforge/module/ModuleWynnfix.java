@@ -15,6 +15,7 @@ public class ModuleWynnfix extends ModuleBase{
 	@SubscribeEvent
 	public void onInteractHorse(EntityInteract e){
 		if(e.getTarget() instanceof AbstractHorse) {
+			e.setCanceled(true);
 		}
 	}
 	

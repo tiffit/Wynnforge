@@ -7,7 +7,6 @@ import com.google.common.collect.Ordering;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiListExtended;
-import net.minecraft.client.gui.GuiPlayerTabOverlay;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec2f;
 import net.minecraft.util.text.TextFormatting;
@@ -17,7 +16,6 @@ import net.tiffit.wynnforge.wynnapi.territories.WynnTerritory;
 
 public class GuiListCompass extends GuiListExtended{
 
-    private final GuiCompass parent;
     private final List<GuiListCompassEntry> entries = Lists.<GuiListCompassEntry>newArrayList();
     public int select = -1;
     public int order = 0;
@@ -27,8 +25,6 @@ public class GuiListCompass extends GuiListExtended{
 	
 	public GuiListCompass(GuiCompass parent, Minecraft mc, int width, int height, int top, int bottom, int slotHeight) {
 		super(mc, width, height, top, bottom, slotHeight);
-		this.parent = parent;
-		GuiPlayerTabOverlay e;
 		refreshEntries("");
 	}
 	

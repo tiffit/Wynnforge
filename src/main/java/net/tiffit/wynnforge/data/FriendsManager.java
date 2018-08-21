@@ -31,6 +31,7 @@ public class FriendsManager {
 	}
 
 	public static void load(){
+		FRIEND_LIST.clear();
 		NBTTagCompound tag = LocalData.getTag("friends");
 		if(tag.hasKey("list")){
 			NBTTagList list = tag.getTagList("list", 8);

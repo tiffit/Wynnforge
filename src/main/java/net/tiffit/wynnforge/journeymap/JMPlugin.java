@@ -12,6 +12,7 @@ import journeymap.client.api.model.ShapeProperties;
 import net.minecraft.util.math.BlockPos;
 import net.tiffit.wynnforge.ConfigManager;
 import net.tiffit.wynnforge.Wynnforge;
+import net.tiffit.wynnforge.module.ModuleJourneymap;
 import net.tiffit.wynnforge.wynnapi.territories.TerritoryDB;
 import net.tiffit.wynnforge.wynnapi.territories.WynnTerritory;
 import net.tiffit.wynnforge.wynnapi.territories.WynnTerritory.TerritoryLoc;
@@ -23,7 +24,7 @@ public class JMPlugin implements IClientPlugin {
 	
 	@Override
 	public void initialize(IClientAPI api) {
-		if(!ConfigManager.isModuleLoaded("journey_map", true))return;
+		if(!ConfigManager.isModuleLoaded("journey_map", true) || !ModuleJourneymap.draw_on_map)return;
 		this.api = api;
 		Random r = new Random();
 		for(WynnTerritory t : TerritoryDB.territories){
