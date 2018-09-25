@@ -24,6 +24,13 @@ public class WynnTerritory {
 			return new Vec2f(diffX, diffY);
 		}
 		
+		public double distance(){
+			Vec2f center = findCenter();
+			EntityPlayer p = Minecraft.getMinecraft().player;
+			Vec2f player = new Vec2f((float)p.posX, (float)p.posZ);
+			return Math.sqrt(Math.pow(center.x - player.x, 2) + Math.pow(center.y - player.y, 2));
+		}
+		
 		public boolean isIn() {
 			EntityPlayer p = Minecraft.getMinecraft().player;
 			double x = p.posX;

@@ -23,7 +23,7 @@ import net.tiffit.wynnforge.utils.WFUtils;
 public class ModuleInfo extends ModuleBase {
 
 	// Config
-	private boolean coordinates, direction, inventory;
+	private boolean coordinates, direction, inventory, time;
 
 	public ModuleInfo() {
 		super("Info");
@@ -58,11 +58,16 @@ public class ModuleInfo extends ModuleBase {
 						rot = "East";
 					mc.fontRenderer.drawStringWithShadow("F: " + rot, 2, yPos += 10, 0xffffffff);
 				}
+				if(time){
+					int current_time = (24000 - (int) (mc.world.getWorldTime() % 24000))/20;
+					int minutes = current_time/60;
+					int seconds = current_time % 60;
+					mc.fontRenderer.drawStringWithShadow("Next SP: " + minutes + ":" + (seconds < 10 ? "0" : "") + seconds, 2, yPos += 10, 0xffffffff);
+				}
 				if (!coordinates && !direction)
 					yPos -= 10;
 				if (inventory) {
 					mc.fontRenderer.drawStringWithShadow(TextFormatting.DARK_AQUA + "Inventory:", 2, yPos += 20, 0xffffffff);
-					int emeralds = WFUtils.getCurrentEmeralds();
 					Map<Integer, List<PotionInfo>> potions = new LinkedHashMap<Integer, List<PotionInfo>>();
 					for (int i = 19; i >= 0; i--)
 						potions.put(i, new ArrayList<PotionInfo>());
@@ -83,7 +88,12 @@ public class ModuleInfo extends ModuleBase {
 							horseTexts.add(horseText);
 						}
 					}
-					mc.fontRenderer.drawStringWithShadow(TextFormatting.GREEN.toString() + emeralds + "\u00B2", 10, yPos += 10, 0xffffffff);
+					int treasure = WFUtils.getTreasureValue();
+					String treasureText = "";
+					if(treasure > 0)treasureText = " (+" + treasure + "\u00B2 in Treasure)";
+					mc.fontRenderer.drawStringWithShadow(TextFormatting.GREEN.toString() + WFUtils.getCurrentEmeralds() + "\u00B2" + treasureText, 10, yPos += 10, 0xffffffff);
+					int tokens = WFUtils.getCurrentTokens();
+					if(tokens > 0)mc.fontRenderer.drawStringWithShadow(TextFormatting.AQUA.toString() + tokens + " Dungeon Token" + (tokens == 1 ? "" : "s"), 10, yPos += 10, 0xffffffff);
 					for (String horseText : horseTexts)
 						mc.fontRenderer.drawStringWithShadow(horseText, 10, yPos += 10, 0xffff9900);
 					if (potionTotalCharge > 0) {
@@ -108,6 +118,7 @@ public class ModuleInfo extends ModuleBase {
 		coordinates = cat.getBoolean("coordinates", true, null);
 		direction = cat.getBoolean("direction", true, null);
 		inventory = cat.getBoolean("inventory", true, null);
+		time = cat.getBoolean("time", true, null);
 	}
 
 }

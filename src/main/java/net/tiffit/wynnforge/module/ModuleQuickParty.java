@@ -61,7 +61,11 @@ public class ModuleQuickParty extends ModuleBase {
 		
 		@Override
 		public List<String> getTabCompletions(MinecraftServer server, ICommandSender sender, String[] args, BlockPos targetPos) {
-			return new ArrayList<String>(FriendsManager.FRIEND_LIST);
+			ArrayList<String> possible = new ArrayList<String>();
+			for(String str : FriendsManager.FRIEND_LIST){
+				if(str.startsWith(args[args.length - 1]))possible.add(str);
+			}
+			return possible;
 		}
 		
 	}

@@ -36,11 +36,11 @@ public class ModuleJourneymap extends ModuleBase {
 				try{
 					int[] vals = new int[3];
 					for(int i = 0; i < 3; i++)vals[i] = Integer.valueOf(coords[i]);
-					message = message.replace(text, "[x:" + vals[0] + ", y:" + vals[1] + ", z:" + vals[2] + "]");
+					message = message.replace(text, "[x:" + vals[0] + ",y:" + vals[1] + ",z:" + vals[2] + "]");
 					found = true;
 				}catch(NumberFormatException ex){
 					ex.printStackTrace();
-					return;
+					continue;
 				}
 			}
 			if(found)e.setMessage(new TextComponentString(message).setStyle(e.getMessage().getStyle().createShallowCopy()));

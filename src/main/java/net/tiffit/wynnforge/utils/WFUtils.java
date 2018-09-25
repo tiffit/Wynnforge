@@ -1,14 +1,14 @@
 package net.tiffit.wynnforge.utils;
 
+import org.lwjgl.opencl.api.Filter;
+
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
-import net.minecraft.init.Blocks;
-import net.minecraft.init.Items;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.text.TextFormatting;
 
 public class WFUtils {
 
@@ -18,17 +18,61 @@ public class WFUtils {
 
 	public static int getCurrentEmeralds() {
 		int emeralds = 0;
-		for (ItemStack s : Minecraft.getMinecraft().player.inventory.mainInventory) {
-			if (s.getItem() == Items.EMERALD)
-				emeralds += s.getCount();
-			if (s.getItem() == Item.getItemFromBlock(Blocks.EMERALD_BLOCK))
-				emeralds += s.getCount() * 64;
-			if (s.getItem() == Items.EXPERIENCE_BOTTLE)
-				emeralds += s.getCount() * Math.pow(64, 2);
-		}
+		emeralds += getCountInInv("Emerald");
+		emeralds += getCountInInv("Emerald Block") * 64;
+		emeralds += getCountInInv("Liquid Emerald") * 64 * 64;
 		return emeralds;
 	}
 
+	public static int getCountInInv(String name){
+		return getCountInInv(new Filter<String>() {
+			@Override
+			public boolean accept(String object) {
+				return name.equals(object);
+			}
+		});
+	}
+	
+	public static int getCountInInv(Filter<String> filter){
+		int count = 0;
+		for (ItemStack s : Minecraft.getMinecraft().player.inventory.mainInventory) {
+			if(filter.accept(TextFormatting.getTextWithoutFormattingCodes(s.getDisplayName())))count += s.getCount();
+		}
+		return count;
+	}
+	
+	public static int getCurrentTokens(){
+		return getCountInInv(new Filter<String>() {
+			@Override
+			public boolean accept(String object) {
+				return object.endsWith(" Token");
+			}
+		});
+	}
+	
+	public static int getTreasureValue(){
+		int value = 0;
+		value += getCountInInv("Small Pearl")*2;
+		value += getCountInInv("Glowing Pearl")*6;
+		value += getCountInInv("Large Glowing Pearl")*10;
+		value += getCountInInv("Huge Pearl")*18;
+		value += getCountInInv("Coral Ruby")*10;
+		value += getCountInInv("Coral Amethyst")*12;
+		value += getCountInInv("Coral Topaz")*14;
+		value += getCountInInv("Coral Sapphire")*28;
+		value += getCountInInv("Coral Diamond")*128;
+		value += getCountInInv("Sunken Silver Nugget")*2;
+		value += getCountInInv("Sunken Gold Nugget")*3;
+		value += getCountInInv("Sunken Silver Bar")*5;
+		value += getCountInInv("Sunken Gold Bar")*7;
+		value += getCountInInv("Sunken Silver Bundle")*10;
+		value += getCountInInv("Sunken Gold Bundle")*14;
+		value += getCountInInv("Sunken Block of Silver")*24;
+		value += getCountInInv("Sunken Block of Gold")*32;
+		value += getCountInInv("Sunken Artifact")*192;
+		return value;
+	}
+	
 	// stolen from the GUI class
 	public static void drawGradientRect(int left, int top, int right, int bottom, int startColor, int endColor) {
 		float f = (float) (startColor >> 24 & 255) / 255.0F;

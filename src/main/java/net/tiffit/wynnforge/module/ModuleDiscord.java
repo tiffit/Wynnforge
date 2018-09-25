@@ -35,6 +35,7 @@ public class ModuleDiscord extends ModuleBase {
 	
 	@Override
 	public void unloadModule() {
+		DiscordRPC.ClearPresence();
 		DiscordRPCHandler.stop();
 	}
 	
@@ -48,7 +49,7 @@ public class ModuleDiscord extends ModuleBase {
 			@Override
 			public void run() {
 				while (connected) {
-					if (Minecraft.getMinecraft().player != null && System.currentTimeMillis() - lastUpdate > 1000 * 30) {
+					if (Minecraft.getMinecraft().player != null && System.currentTimeMillis() - lastUpdate > 1000) {
 						lastUpdate = System.currentTimeMillis();
 						final String username = Minecraft.getMinecraft().player.getName();
 						String world = PlayerList.getPlayerWorld(username);
@@ -65,15 +66,33 @@ public class ModuleDiscord extends ModuleBase {
 						}
 						if (world.startsWith("WC")) {
 							WynnTerritory found = null;
+							WynnTerritory closest = null;
+							double closestDistance = -1;
 							for (WynnTerritory terr : TerritoryDB.territories) {
 								if (terr.location != null && terr.location.isIn()) {
 									found = terr;
 									break;
+								}else if(terr.location != null){
+									if(closest == null){
+										closest = terr;
+										closestDistance = terr.location.distance();
+									}else{
+										double distanceNew = terr.location.distance();
+										if(distanceNew > closestDistance){
+											closest = terr;
+											closestDistance = distanceNew;
+										}
+									}
 								}
 							}
 							if (found != null) {
 								if (!rp.state.equals("At " + found.territory)) {
 									rp.state = "At " + found.territory;
+									update = true;
+								}
+							}else if(closest != null && closestDistance < 3000){
+								if (!rp.state.equals("Near " + closest.territory)) {
+									rp.state = "Near " + closest.territory;
 									update = true;
 								}
 							} else {
@@ -87,7 +106,6 @@ public class ModuleDiscord extends ModuleBase {
 							rp.setPresence();
 					} else {
 						try {
-							Thread.sleep(100);
 						} catch (InterruptedException e) {
 							e.printStackTrace();
 						}

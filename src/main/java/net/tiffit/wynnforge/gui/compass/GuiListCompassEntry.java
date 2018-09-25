@@ -3,7 +3,6 @@ package net.tiffit.wynnforge.gui.compass;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.GuiListExtended.IGuiListEntry;
-import net.minecraft.util.math.Vec2f;
 import net.tiffit.wynnforge.wynnapi.territories.WynnTerritory;
 import net.tiffit.wynnforge.wynnapi.territories.WynnTerritory.TerritoryLoc;
 
@@ -18,9 +17,7 @@ public class GuiListCompassEntry implements IGuiListEntry {
 		this.territory = territory;
 		this.parent = parent;
 		Minecraft mc = Minecraft.getMinecraft();
-		Vec2f center = territory.location.findCenter();
-		Vec2f player = new Vec2f((float)mc.player.posX, (float)mc.player.posZ);
-		distance = (int) Math.sqrt(Math.pow(center.x - player.x, 2) + Math.pow(center.y - player.y, 2));
+		distance = (int)territory.location.distance();
 	}
 	
 	@Override
