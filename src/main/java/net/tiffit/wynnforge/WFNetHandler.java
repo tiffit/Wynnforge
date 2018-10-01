@@ -10,6 +10,7 @@ import net.minecraft.network.Packet;
 import net.minecraft.network.play.server.SPacketChat;
 import net.minecraft.network.play.server.SPacketOpenWindow;
 import net.minecraft.network.play.server.SPacketPlayerListItem;
+import net.minecraft.network.play.server.SPacketResourcePackSend;
 import net.minecraft.network.play.server.SPacketSoundEffect;
 import net.minecraft.network.play.server.SPacketSpawnPlayer;
 import net.minecraft.network.play.server.SPacketWindowItems;
@@ -31,6 +32,13 @@ public class WFNetHandler extends NetHandlerPlayClient {
 	public void handleSoundEffect(SPacketSoundEffect p) {
 		boolean canceled = eb.post(new PacketRecieveEvent(p, true));
 		if(!canceled)super.handleSoundEffect(p);
+		eb.post(new PacketRecieveEvent(p, false));
+	}
+	
+	@Override
+	public void handleResourcePack(SPacketResourcePackSend p) {
+		boolean canceled = eb.post(new PacketRecieveEvent(p, true));
+		if(!canceled)super.handleResourcePack(p);
 		eb.post(new PacketRecieveEvent(p, false));
 	}
 	

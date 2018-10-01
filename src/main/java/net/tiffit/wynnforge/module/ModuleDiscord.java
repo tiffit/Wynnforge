@@ -4,6 +4,7 @@ import me.paulhobbel.discordrp.api.rpc.DiscordEventHandlers;
 import me.paulhobbel.discordrp.api.rpc.DiscordRPC;
 import me.paulhobbel.discordrp.api.rpc.DiscordRPCHandler;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.network.FMLNetworkEvent.ClientConnectedToServerEvent;
 import net.minecraftforge.fml.common.network.FMLNetworkEvent.ClientDisconnectionFromServerEvent;
@@ -43,25 +44,34 @@ public class ModuleDiscord extends ModuleBase {
 	public void connectServer(ClientConnectedToServerEvent e) {
 		connected = true;
 		runningThread = new Thread(new Runnable() {
-
+			
 			private long lastUpdate = 0;
-
+			
 			@Override
 			public void run() {
 				while (connected) {
-					if (Minecraft.getMinecraft().player != null && System.currentTimeMillis() - lastUpdate > 1000) {
+					EntityPlayerSP p = Minecraft.getMinecraft().player;
+					if (p != null && System.currentTimeMillis() - lastUpdate > 1000) {
 						lastUpdate = System.currentTimeMillis();
-						final String username = Minecraft.getMinecraft().player.getName();
+						final String username = p.getName();
 						String world = PlayerList.getPlayerWorld(username);
 						if(world == null)continue;
 						String details = world;
-						if (world.startsWith("WC"))
+						String lit = username;
+						if (world.startsWith("WC")){
 							details = world.replace("WC", "World ");
-						else if (world.startsWith("lobby"))
+							lit = username + " | lvl" + p.experienceLevel;
+						}else if (world.startsWith("lobby")){
 							details = world.replace("lobby", "Lobby ");
+							lit = username;
+						}
 						boolean update = false;
 						if (!rp.details.equals(details)) {
 							rp.details = details;
+							update = true;
+						}
+						if (!rp.largeImageText.equals(lit)) {
+							rp.largeImageText = lit;
 							update = true;
 						}
 						if (world.startsWith("WC")) {
@@ -106,6 +116,7 @@ public class ModuleDiscord extends ModuleBase {
 							rp.setPresence();
 					} else {
 						try {
+							Thread.sleep(100);
 						} catch (InterruptedException e) {
 							e.printStackTrace();
 						}

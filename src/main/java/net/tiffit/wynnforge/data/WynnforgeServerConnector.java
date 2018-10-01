@@ -18,20 +18,14 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
 import net.minecraft.client.Minecraft;
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.common.network.FMLNetworkEvent.ClientConnectedToServerEvent;
 
-@Mod.EventBusSubscriber
 public class WynnforgeServerConnector {
 	
 	private static final String JOIN_URL = "https://sessionserver.mojang.com/session/minecraft/join";
 	private static final String SERVER_URL = "http://tiffit.net/Wynnforge/";
 	private static String key = null;
 	
-	@SubscribeEvent
-	public static void connectWynnforgeServer(ClientConnectedToServerEvent e) {
-
+	public static void connectWynnforgeServer() {
 		String serverId = createJoinSession();
 		getKey(serverId);
 	}
