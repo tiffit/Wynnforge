@@ -69,7 +69,7 @@ public class ModuleInfo extends ModuleBase {
 				if (inventory) {
 					mc.fontRenderer.drawStringWithShadow(TextFormatting.DARK_AQUA + "Inventory:", 2, yPos += 20, 0xffffffff);
 					Map<Integer, List<PotionInfo>> potions = new LinkedHashMap<Integer, List<PotionInfo>>();
-					for (int i = 19; i >= 0; i--)
+					for (int i = 20; i >= 0; i--)
 						potions.put(i, new ArrayList<PotionInfo>());
 					int potionTotalCharge = 0;
 					List<String> horseTexts = new ArrayList<String>();

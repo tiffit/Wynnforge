@@ -79,8 +79,8 @@ public class ModuleItemColor extends ModuleBase {
 		}else if(unid && name.startsWith("Unidentified")){
 			String prefix = stack.getDisplayName().substring(0, 2);
 			if(prefix.equals(TextFormatting.YELLOW.toString()))return c_unique;
-			if(prefix.equals(TextFormatting.AQUA.toString()))return c_rare;
-			if(prefix.equals(TextFormatting.LIGHT_PURPLE.toString()))return c_legendary;
+			if(prefix.equals(TextFormatting.LIGHT_PURPLE.toString()))return c_rare;
+			if(prefix.equals(TextFormatting.AQUA.toString()))return c_legendary;
 			if(prefix.equals(TextFormatting.RED.toString()))return c_mythic;
 			if(prefix.equals(TextFormatting.GREEN.toString()))return c_set;
 		}
