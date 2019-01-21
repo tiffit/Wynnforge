@@ -23,6 +23,7 @@ public class ModulePlayerInfo extends ModuleBase {
 	@SubscribeEvent
 	public void onRenderPlayer(RenderPlayerEvent.Post e) {
 		EntityPlayer p = e.getEntityPlayer();
+		if(Minecraft.getMinecraft().player.getUniqueID().equals(p.getUniqueID()))return;
 		List<String> tags = new ArrayList<String>();
 		if (FriendsManager.isFriend(p.getName())) {
 			tags.add(TextFormatting.GREEN + "Friend");

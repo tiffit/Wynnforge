@@ -7,6 +7,8 @@ import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.network.NetHandlerPlayClient;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.Packet;
+import net.minecraft.network.play.client.CPacketAnimation;
+import net.minecraft.network.play.client.CPacketPlayerTryUseItem;
 import net.minecraft.network.play.server.SPacketChat;
 import net.minecraft.network.play.server.SPacketOpenWindow;
 import net.minecraft.network.play.server.SPacketPlayerListItem;
@@ -64,14 +66,16 @@ public class WFNetHandler extends NetHandlerPlayClient {
 	}
 	
 	@Override
-	public void handleChat(SPacketChat packetIn) {
-		super.handleChat(packetIn);
-	}
-	
-	@Override
 	public void handlePlayerListItem(SPacketPlayerListItem p) {
 		boolean canceled = eb.post(new PacketRecieveEvent(p, true));
 		if(!canceled)super.handlePlayerListItem(p);
+		eb.post(new PacketRecieveEvent(p, false));
+	}
+	
+	@Override
+	public void handleChat(SPacketChat p) {
+		boolean canceled = eb.post(new PacketRecieveEvent(p, true));
+		if(!canceled)super.handleChat(p);
 		eb.post(new PacketRecieveEvent(p, false));
 	}
 	

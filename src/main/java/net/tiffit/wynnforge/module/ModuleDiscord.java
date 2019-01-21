@@ -9,7 +9,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.network.FMLNetworkEvent.ClientConnectedToServerEvent;
 import net.minecraftforge.fml.common.network.FMLNetworkEvent.ClientDisconnectionFromServerEvent;
 import net.tiffit.wynnforge.module.ModuleBase.ModuleClass;
-import net.tiffit.wynnforge.support.discord.WynncraftRichPresence;
+import net.tiffit.wynnforge.support.WynncraftRichPresence;
 import net.tiffit.wynnforge.wynnapi.PlayerList;
 import net.tiffit.wynnforge.wynnapi.territories.TerritoryDB;
 import net.tiffit.wynnforge.wynnapi.territories.WynnTerritory;

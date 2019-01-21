@@ -94,6 +94,8 @@ public class ModuleInfo extends ModuleBase {
 					mc.fontRenderer.drawStringWithShadow(TextFormatting.GREEN.toString() + WFUtils.getCurrentEmeralds() + "\u00B2" + treasureText, 10, yPos += 10, 0xffffffff);
 					int tokens = WFUtils.getCurrentTokens();
 					if(tokens > 0)mc.fontRenderer.drawStringWithShadow(TextFormatting.AQUA.toString() + tokens + " Dungeon Token" + (tokens == 1 ? "" : "s"), 10, yPos += 10, 0xffffffff);
+					int scrap = WFUtils.getCurrentScrap();
+					if(scrap > 0)mc.fontRenderer.drawStringWithShadow(TextFormatting.GRAY.toString() + scrap + " Scrap", 10, yPos += 10, 0xffffffff);
 					for (String horseText : horseTexts)
 						mc.fontRenderer.drawStringWithShadow(horseText, 10, yPos += 10, 0xffff9900);
 					if (potionTotalCharge > 0) {

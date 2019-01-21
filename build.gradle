@@ -11,7 +11,7 @@ apply plugin: 'net.minecraftforge.gradle.forge'
 //Only edit below this line, the above code adds and enables the necessary things for Forge to be setup.
 
 
-version = "0.2.2b"
+version = "0.3.0"
 group = "net.tiffit.wynnforge" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = "Wynnforge"
 
@@ -39,10 +39,17 @@ repositories {
 
     // JourneyMap API snapshots are here
     maven { url 'https://oss.sonatype.org/content/groups/public/' }
+    
+    maven {
+    	name = "Progwml6 maven"
+    	url = "http://dvs1.progwml6.com/files/maven"
+    }
 }
 
 dependencies {
     compile "info.journeymap:journeymap-api:1.12-1.4"
+    deobfProvided "mezz.jei:jei_1.12.2:4.14.3.237:api"
+    runtime "mezz.jei:jei_1.12.2:4.14.3.237"
 }
 
 processResources {

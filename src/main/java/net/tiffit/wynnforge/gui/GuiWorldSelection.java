@@ -11,6 +11,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.ClickType;
 import net.minecraft.inventory.Container;
@@ -27,7 +28,7 @@ public class GuiWorldSelection extends GuiScreen {
 
 	private SPacketWindowItems packet;
 	private EntityPlayer player;
-	
+
 	private static int prevServer = -1;
 	private boolean prevWorldThisInstance = false;
 
@@ -63,16 +64,28 @@ public class GuiWorldSelection extends GuiScreen {
 			Entry<Integer, WorldInfo> entry = entries.next();
 			buttonList.add(new WorldButton(width / 2 - 100, height / 2 + i * 21 - worlds.size() * 20 / 2, 200, 20, entry.getValue(), entry.getKey()));
 		}
+		List<ItemStack> allItems = packet.getItemStacks();
+		buttonList.add(new CategoryButton(width/2 - 25, allItems.get(35), 35));
+		buttonList.add(new CategoryButton(width/2, allItems.get(35 + 9), 35 + 9));
+		buttonList.add(new CategoryButton(width/2 + 25, allItems.get(35 + 9*2), 35 + 9*2));
 	}
 
 	@Override
 	protected void actionPerformed(GuiButton button) throws IOException {
-		Container con = mc.player.openContainer;
-		ItemStack click = con.slotClick(button.id, 0, ClickType.PICKUP, player);
-		short nextId = con.getNextTransactionID(player.inventory);
-		prevWorldThisInstance = true;
-		prevServer = ((WorldButton)button).info.world;
-		WFNetHandler.INSTANCE.sendPacket(new CPacketClickWindow(packet.getWindowId(), button.id, 0, ClickType.PICKUP, click, nextId));
+		if (button instanceof WorldButton) {
+			WorldButton wb = (WorldButton) button;
+			Container con = mc.player.openContainer;
+			ItemStack click = con.slotClick(wb.id, 0, ClickType.PICKUP, player);
+			short nextId = con.getNextTransactionID(player.inventory);
+			prevWorldThisInstance = true;
+			prevServer = wb.info.world;
+			WFNetHandler.INSTANCE.sendPacket(new CPacketClickWindow(packet.getWindowId(), wb.id, 0, ClickType.PICKUP, click, nextId));
+		}else if(button instanceof CategoryButton){
+			Container con = mc.player.openContainer;
+			ItemStack click = con.slotClick(button.id, 0, ClickType.PICKUP, player);
+			short nextId = con.getNextTransactionID(player.inventory);
+			WFNetHandler.INSTANCE.sendPacket(new CPacketClickWindow(packet.getWindowId(), button.id, 0, ClickType.PICKUP, click, nextId));
+		}
 	}
 
 	@Override
@@ -81,7 +94,7 @@ public class GuiWorldSelection extends GuiScreen {
 		drawCenteredString(fontRenderer, "World Selection", width / 2, height / 2 - worlds.size() * 20 / 2 - 12, 0xffffffff);
 		super.drawScreen(mouseX, mouseY, partialTicks);
 		for (GuiButton button : buttonList) {
-			if (button.isMouseOver()) {
+			if (button instanceof WorldButton && button.isMouseOver()) {
 				WorldButton b = (WorldButton) button;
 				List<String> friends = this.friends.get(b.info.world);
 				if (!friends.isEmpty()) {
@@ -136,17 +149,40 @@ public class GuiWorldSelection extends GuiScreen {
 			if (info.lag >= 20)
 				color = 0xffbc0707;
 			drawString(fr, "Lag: " + info.lag + "%", x + width - fr.getStringWidth("Lag: " + info.lag + "%") - 4, y + 6, color);
-			
 
 			List<String> friends = GuiWorldSelection.this.friends.get(info.world);
-			if(!friends.isEmpty()){
+			if (!friends.isEmpty()) {
 				drawString(fr, friends.size() + " Friend" + (friends.size() == 1 ? "" : "s"), x + width + 4, y + 6, 0xff00dd00);
 			}
-			if(prevServer == info.world){
+			if (prevServer == info.world) {
 				String text = "Prev World";
-				if(prevWorldThisInstance)text = "Connecting";
+				if (prevWorldThisInstance)
+					text = "Connecting";
 				drawString(fr, text, x - 60, y + 6, 0xff55aaff);
 			}
+		}
+
+	}
+	
+	private class CategoryButton extends GuiButton {
+
+		private ItemStack stack;
+
+		public CategoryButton(int x, ItemStack stack, int index) {
+			super(index, x - 10, 5, 20, 20, "");
+			this.stack = stack;
+		}
+
+		@Override
+		public void drawButton(Minecraft mc, int mouseX, int mouseY, float partialTicks) {
+			super.drawButton(mc, mouseX, mouseY, partialTicks);
+			GlStateManager.pushMatrix();
+			GlStateManager.color(1, 1, 1, 1);
+			mc.getRenderItem().renderItemIntoGUI(stack, x + 2, y + 2);
+			if(hovered){
+				drawCenteredString(fontRenderer, stack.getDisplayName(), GuiWorldSelection.this.width/2, 30, 0xffffffff);
+			}
+			GlStateManager.popMatrix();
 		}
 
 	}

@@ -24,6 +24,7 @@ public class FriendsManager {
 	public static List<String> FRIEND_LIST = new ArrayList<String>();
 
 	private static boolean intercept = false;
+	private static boolean interceptRequest = false;
 	private static long lastIntercept = -1;
 
 	public static boolean isFriend(String friend) {
@@ -43,8 +44,11 @@ public class FriendsManager {
 	
 	@SubscribeEvent
 	public static void handleRecieveMessage(ClientChatReceivedEvent e) {
-		if (e.getType() == ChatType.SYSTEM && intercept) {
-			String text = TextFormatting.getTextWithoutFormattingCodes(e.getMessage().getUnformattedText());
+		String text = TextFormatting.getTextWithoutFormattingCodes(e.getMessage().getUnformattedText());
+		if(interceptRequest && text.equals("Try typing /friend add Username!")){
+			interceptRequest = false;
+			e.setCanceled(true);
+		}else if (e.getType() == ChatType.SYSTEM && intercept) {
 			if (text.startsWith(Minecraft.getMinecraft().player.getName() + "' friends (")) {
 				intercept = false;
 				e.setCanceled(true);
@@ -71,6 +75,10 @@ public class FriendsManager {
 					LocalData.getTag("friends").setTag("list", tagList);
 					LocalData.save();
 				}
+			}else if(text.startsWith("We couldn't find any friends.")){
+				intercept = false;
+				interceptRequest = true;
+				e.setCanceled(true);
 			}
 		}
 	}

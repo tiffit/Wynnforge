@@ -16,7 +16,6 @@ public class GuiListCompassEntry implements IGuiListEntry {
 	public GuiListCompassEntry(WynnTerritory territory, GuiListCompass parent) {
 		this.territory = territory;
 		this.parent = parent;
-		Minecraft mc = Minecraft.getMinecraft();
 		distance = (int)territory.location.distance();
 	}
 	

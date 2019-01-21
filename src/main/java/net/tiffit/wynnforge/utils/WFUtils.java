@@ -3,6 +3,7 @@ package net.tiffit.wynnforge.utils;
 import org.lwjgl.opencl.api.Filter;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
@@ -13,7 +14,8 @@ import net.minecraft.util.text.TextFormatting;
 public class WFUtils {
 
 	public static boolean isInWorld() {
-		return !Minecraft.getMinecraft().player.inventory.getStackInSlot(6).isEmpty();
+		EntityPlayerSP p = Minecraft.getMinecraft().player;
+		return p != null && !p.inventory.getStackInSlot(6).isEmpty();
 	}
 
 	public static int getCurrentEmeralds() {
@@ -46,6 +48,15 @@ public class WFUtils {
 			@Override
 			public boolean accept(String object) {
 				return object.endsWith(" Token");
+			}
+		});
+	}
+	
+	public static int getCurrentScrap(){
+		return getCountInInv(new Filter<String>() {
+			@Override
+			public boolean accept(String object) {
+				return object.equals("Repair Scrap");
 			}
 		});
 	}

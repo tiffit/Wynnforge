@@ -22,7 +22,7 @@ public class PotionInfo {
 			int charges = Integer.valueOf(name.split("\\[")[1].split("/")[0]);
 			NBTTagList lore = stack.getTagCompound().getCompoundTag("display").getTagList("Lore", 8);
 			int amount = Integer.valueOf(TextFormatting.getTextWithoutFormattingCodes(lore.getStringTagAt(1).split(" ")[2]));
-			int lvl = Integer.valueOf(lore.getStringTagAt(4).split(" ")[3]);
+			int lvl = Integer.valueOf(lore.getStringTagAt(4).split(" ")[4]);
 			return new PotionInfo(charges, amount, lvl);
 		}
 		return null;
