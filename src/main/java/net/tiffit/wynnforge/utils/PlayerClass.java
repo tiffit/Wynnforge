@@ -38,6 +38,19 @@ public enum PlayerClass {
 				if(words[1].equals("Bow"))return PlayerClass.Archer;
 				if(words[1].equals("Dagger"))return PlayerClass.Assassin;
 			}
+			for(int i = 0; i < lore.tagCount(); i++){
+				String line = TextFormatting.getTextWithoutFormattingCodes(lore.getStringTagAt(i));
+				String[] line_words = line.split(" ");
+				if(line_words.length > 3){
+					if(line_words[1].equals("Class") && line_words[2].equals("Req:")){
+						System.out.println(line_words[3]);
+						if(line_words[3].equals("Mage/Dark"))return PlayerClass.Mage;
+						if(line_words[3].equals("Warrior/Knight"))return PlayerClass.Warrior;
+						if(line_words[3].equals("Archer/Hunter"))return PlayerClass.Archer;
+						if(line_words[3].equals("Assassin/Ninja"))return PlayerClass.Assassin;
+					}
+				}
+			}
 		}
 		return null;
 	}

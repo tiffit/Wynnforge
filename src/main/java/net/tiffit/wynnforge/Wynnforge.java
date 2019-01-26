@@ -44,7 +44,7 @@ import net.tiffit.wynnforge.wynnapi.territories.TerritoryDB;
 public class Wynnforge {
 	public static final String MODID = "wynnforge";
 	public static final String NAME = "Wynnforge";
-	public static final String VERSION = "0.3.0";
+	public static final String VERSION = "0.3.1";
 	public static final String CONFIG_GUI_FACTORY = "net.tiffit.wynnforge.gui.config.ConfigGuiFactory";
 
 	private static List<ModuleBase> MODULES = new ArrayList<ModuleBase>();

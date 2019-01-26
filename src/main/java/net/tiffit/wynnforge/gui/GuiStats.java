@@ -52,22 +52,24 @@ public class GuiStats extends GuiScreen {
 		buttonList.clear();
 		for(int i = 0 ; i < skills.length; i++){
 			int dx = width/2 - 50;
-			int dy = this.height/2 + (i * 75) - (5*75)/2;
-			buttonList.add(new GuiButton(i*2, dx - 26, dy + 40, 25, 20, "+1"));
-			buttonList.add(new GuiButton(i*2+1, dx + 1, dy + 40, 25, 20, "+5"));
+			int dy = this.height/2 + (i * 63) - (5*63)/2;
+			buttonList.add(new GuiButton(i*2, dx - 26, dy + 36, 25, 20, "+1"));
+			buttonList.add(new GuiButton(i*2+1, dx + 1, dy + 36, 25, 20, "+5"));
 		}
-		int infox = width/3*2;
-		buttonList.add(new ItemStackButton(items, 6, infox, 45, false));
-		buttonList.add(new ItemStackButton(items, 7, infox + 25, 45, false));
-		buttonList.add(new ItemStackButton(items, 8, infox + 25*2, 45, false));
+		int infox = width/3*2 + 4;
+		int infoy = this.height/2- (4*60)/2 - 30;
+		int infoy2 = this.height/2+ (4*60)/2 + 20;
+		buttonList.add(new ItemStackButton(items, 6, infox, infoy, false));
+		buttonList.add(new ItemStackButton(items, 7, infox + 25, infoy, false));
+		buttonList.add(new ItemStackButton(items, 8, infox + 25*2, infoy, false));
 		
-		buttonList.add(new ItemStackButton(items, 37, infox, height-90, true));
-		buttonList.add(new ItemStackButton(items, 38, infox + 25, height-90, true));
-		buttonList.add(new ItemStackButton(items, 39, infox + 25*2, height-90, true));
+		buttonList.add(new ItemStackButton(items, 37, infox, infoy2, true));
+		buttonList.add(new ItemStackButton(items, 38, infox + 25, infoy2, true));
+		buttonList.add(new ItemStackButton(items, 39, infox + 25*2, infoy2, true));
 		if(items.get(20).getItem() == Item.getItemFromBlock(Blocks.CHEST)){
 			buttonList.add(new ItemStackButton(items, 20, infox + 25, height-65, true));
 		}
-		buttonList.add(new ItemStackButton(items, 2, width/2 - 65, 13, true));
+		buttonList.add(new ItemStackButton(items, 2, 1, 1, true));
 	}
 
 	@Override
@@ -102,37 +104,38 @@ public class GuiStats extends GuiScreen {
 		for(int i = 0 ; i < skills.length; i++){
 			SkillInfo skill = skills[i];
 			int dx = width/2 - 50;
-			int dy = this.height/2 + (i * 75) - (5*75)/2;
+			int dy = this.height/2 + (i * 63) - (5*63)/2;
 			drawCenteredString(fontRenderer, skill.skill, dx, dy, 0xffffffff);
-			drawCenteredString(fontRenderer, TextFormatting.GRAY.toString() + skill.current + " points", dx, dy + 10, 0xffffffff);
-			drawCenteredString(fontRenderer, TextFormatting.GRAY.toString() + "Now: " + skill.percent_now + "%", dx, dy + 20, 0xffffffff);
-			drawCenteredString(fontRenderer, TextFormatting.DARK_GRAY.toString() + "Next: " + skill.percent_next + "%", dx, dy + 30, 0xffffffff);
+			drawCenteredString(fontRenderer, TextFormatting.GRAY.toString() + skill.current + " points", dx, dy + 8, 0xffffffff);
+			drawCenteredString(fontRenderer, TextFormatting.GRAY.toString() + "Now: " + skill.percent_now + "%", dx, dy + 16, 0xffffffff);
+			drawCenteredString(fontRenderer, TextFormatting.DARK_GRAY.toString() + "Next: " + skill.percent_next + "%", dx, dy + 24, 0xffffffff);
 			
 			String[] descLines = skill.description.split("\n");
 			for(int l = 0; l < descLines.length; l++){
 				String line = descLines[l];
-				drawString(fontRenderer, line, dx - 50 - fontRenderer.getStringWidth(line), dy + 10 + 10*l, 0xffffffff);
+				drawString(fontRenderer, line, dx - 50 - fontRenderer.getStringWidth(line), dy + 8 + 8*l, 0xffffffff);
 			}
 		}
 		for(int i = 0 ; i < professions.length; i++){
 			ProfessionInfo prof = professions[i];
 			int dx = width/2 + 57 + (i/4)*(width/2/3);
-			int dy = this.height/2 + (i%4 * 75) - (4*75)/2;
+			int dy = this.height/2 + (i%4 * 60) - (4*60)/2;
+			int boxWidth = 90;
 			drawCenteredString(fontRenderer, TextFormatting.GOLD + TextFormatting.BOLD.toString() + prof.profession.trim(), dx, dy, 0xffffffff);
 			drawCenteredString(fontRenderer, TextFormatting.GRAY + prof.description.replace("Can ", "").replace("make ", " ").replace("gather", " ").trim(), dx, dy + 10, 0xffffffff);
-			drawRect(dx-45, dy + 22, dx+45, dy+35, 0xffffffff);
-			drawRect(dx-45 + 1, dy + 22 + 1, dx+45 - 1, dy+35 - 1, 0xff444444);
-			int barleft = dx+(int)(90*(prof.percent/100f)) - 45 + 1;
-			drawRect(dx-45 + 1, dy + 22 + 1, barleft, dy+35 - 1, 0xff00cc00);
-			drawString(fontRenderer, prof.level + "", dx-45, dy+37, 0xffffffff);
-			drawString(fontRenderer, (prof.level+1) + "", dx+45 - fontRenderer.getStringWidth((prof.level+1) + ""), dy+37, 0xffffffff);
+			drawRect(dx-boxWidth/2, dy + 22, dx+boxWidth/2, dy+35, 0xffffffff);
+			drawRect(dx-boxWidth/2 + 1, dy + 22 + 1, dx+boxWidth/2 - 1, dy+35 - 1, 0xff444444);
+			int barleft = dx+(int)(boxWidth*(prof.percent/100f)) - boxWidth/2 + 1;
+			drawRect(dx-boxWidth/2 + 1, dy + 22 + 1, barleft, dy+35 - 1, 0xff00cc00);
+			drawString(fontRenderer, prof.level + "", dx-boxWidth/2, dy+37, 0xffffffff);
+			drawString(fontRenderer, (prof.level+1) + "", dx+boxWidth/2 - fontRenderer.getStringWidth((prof.level+1) + ""), dy+37, 0xffffffff);
 			drawCenteredString(fontRenderer, prof.percent + "%", dx, dy+37, 0xffaaaaaa);
 		}
 		ContainerChest container =  (ContainerChest)mc.player.openContainer;
 		
-		drawCenteredString(fontRenderer, TextFormatting.DARK_AQUA.toString() + TextFormatting.BOLD + "Info", width/3*2 + 35, 35, 0xffffffff);
-		drawCenteredString(fontRenderer, TextFormatting.DARK_AQUA.toString() + TextFormatting.BOLD + "Misc", width/3*2 + 35, height-100, 0xffffffff);
-		drawCenteredString(fontRenderer, container.getLowerChestInventory().getName(), width/2 - 125, 20, 0xffffffff);
+		drawCenteredString(fontRenderer, TextFormatting.DARK_AQUA.toString() + TextFormatting.BOLD + "Info", width/3*2 + 39, this.height/2- (4*60)/2 - 40, 0xffffffff);
+		drawCenteredString(fontRenderer, TextFormatting.DARK_AQUA.toString() + TextFormatting.BOLD + "Misc", width/3*2 + 39, this.height/2+ (4*60)/2 + 10, 0xffffffff);
+		drawString(fontRenderer, container.getLowerChestInventory().getName(), 25, 6, 0xffffffff);
 		for(GuiButton button : buttonList){
 			if(button instanceof ItemStackButton){
 				ItemStackButton isb = (ItemStackButton) button;

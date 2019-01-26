@@ -1,13 +1,11 @@
 package net.tiffit.wynnforge.module;
 
-import java.util.Comparator;
 import java.util.List;
 
 import org.lwjgl.input.Keyboard;
 
 import com.google.common.collect.Lists;
 
-import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.text.TextFormatting;
@@ -35,18 +33,22 @@ public class ModuleUnidentifiedPredictor extends ModuleBase {
 		if (name.startsWith("Unidentified")) {
 			String type = name.replace("Unidentified ", "");
 			NBTTagList lore = stack.getTagCompound().getCompoundTag("display").getTagList("Lore", 8);
-
-			String lvlRangeLine = TextFormatting.getTextWithoutFormattingCodes(lore.getStringTagAt(6));
-			String lvlRange = lvlRangeLine.substring(13).trim();
-			String rangeBounds[] = lvlRange.split("-");
-			int lowerRange = Integer.valueOf(rangeBounds[0]);
-			int upperRange = Integer.valueOf(rangeBounds[1]);
-
+			String lvlRangeLine, lvlRange;
+			String[] rangeBounds;
+			int lowerRange, upperRange;
+			try {
+				lvlRangeLine = TextFormatting.getTextWithoutFormattingCodes(lore.getStringTagAt(6));
+				lvlRange = lvlRangeLine.substring(13).trim();
+				rangeBounds = lvlRange.split("-");
+				lowerRange = Integer.valueOf(rangeBounds[0]);
+				upperRange = Integer.valueOf(rangeBounds[1]);
+			} catch (IndexOutOfBoundsException | NumberFormatException ex) {
+				return;
+			}
 			String rarity = TextFormatting.getTextWithoutFormattingCodes(lore.getStringTagAt(7)).substring(8).trim();
 			List<WynnItem> possibilities = Lists.newArrayList();
 			for (WynnItem item : ItemDB.items) {
-				if (item != null && item.level >= lowerRange && item.level <= upperRange && rarity.equals(item.tier)
-						&& type.equals(item.type)) {
+				if (item != null && item.level >= lowerRange && item.level <= upperRange && rarity.equals(item.tier) && type.equals(item.type)) {
 					possibilities.add(item);
 				}
 			}
@@ -54,11 +56,13 @@ public class ModuleUnidentifiedPredictor extends ModuleBase {
 			e.getToolTip().add(offset++, "");
 			if (Keyboard.isKeyDown(Keyboard.KEY_LCONTROL) || Keyboard.isKeyDown(Keyboard.KEY_RCONTROL)) {
 				e.getToolTip().add(offset++, TextFormatting.DARK_AQUA + "Predictions:");
-				possibilities.sort((o1, o2) -> {return o1.level > o2.level ? 1 : 0;});
+				possibilities.sort((o1, o2) -> {
+					return o1.level > o2.level ? 1 : 0;
+				});
 				for (WynnItem item : possibilities) {
 					e.getToolTip().add(offset++, TextFormatting.DARK_AQUA + "- " + TextFormatting.GRAY + item.name + " (Lv. " + item.level + ")");
 				}
-			}else {
+			} else {
 				e.getToolTip().add(offset++, TextFormatting.DARK_AQUA + "Hold CTRL to see ID predictions. (" + possibilities.size() + ")");
 			}
 		}
