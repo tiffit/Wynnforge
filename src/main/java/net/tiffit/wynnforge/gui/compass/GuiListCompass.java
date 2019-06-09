@@ -1,10 +1,7 @@
 package net.tiffit.wynnforge.gui.compass;
 
-import java.util.List;
-
 import com.google.common.collect.Lists;
 import com.google.common.collect.Ordering;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiListExtended;
 import net.minecraft.util.math.BlockPos;
@@ -13,6 +10,8 @@ import net.minecraft.util.text.TextFormatting;
 import net.tiffit.wynnforge.Wynnforge;
 import net.tiffit.wynnforge.wynnapi.territories.TerritoryDB;
 import net.tiffit.wynnforge.wynnapi.territories.WynnTerritory;
+
+import java.util.List;
 
 public class GuiListCompass extends GuiListExtended{
 

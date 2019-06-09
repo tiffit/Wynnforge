@@ -1,9 +1,5 @@
 package net.tiffit.wynnforge.module;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommandSender;
@@ -13,6 +9,10 @@ import net.minecraftforge.client.ClientCommandHandler;
 import net.tiffit.wynnforge.data.FriendsManager;
 import net.tiffit.wynnforge.module.ModuleBase.ModuleClass;
 import net.tiffit.wynnforge.utils.WFCommand;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 @ModuleClass
 public class ModuleQuickParty extends ModuleBase {
@@ -53,7 +53,6 @@ public class ModuleQuickParty extends ModuleBase {
 		@Override
 		public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
 			Minecraft mc = Minecraft.getMinecraft();
-			mc.player.sendChatMessage("/party create");
 			for(String arg : args) {
 				mc.player.sendChatMessage("/party invite " + arg);
 			}

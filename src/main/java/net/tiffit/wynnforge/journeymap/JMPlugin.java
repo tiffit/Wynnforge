@@ -1,7 +1,5 @@
 package net.tiffit.wynnforge.journeymap;
 
-import java.util.Random;
-
 import journeymap.client.api.ClientPlugin;
 import journeymap.client.api.IClientAPI;
 import journeymap.client.api.IClientPlugin;
@@ -16,6 +14,8 @@ import net.tiffit.wynnforge.module.ModuleJourneymap;
 import net.tiffit.wynnforge.wynnapi.territories.TerritoryDB;
 import net.tiffit.wynnforge.wynnapi.territories.WynnTerritory;
 import net.tiffit.wynnforge.wynnapi.territories.WynnTerritory.TerritoryLoc;
+
+import java.util.Random;
 
 @ClientPlugin
 public class JMPlugin implements IClientPlugin {

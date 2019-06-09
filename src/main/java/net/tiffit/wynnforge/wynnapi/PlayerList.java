@@ -1,16 +1,15 @@
 package net.tiffit.wynnforge.wynnapi;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import net.tiffit.wynnforge.Wynnforge;
+
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.Map.Entry;
 import java.util.Set;
-
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-
-import net.tiffit.wynnforge.Wynnforge;
 
 public class PlayerList {
 

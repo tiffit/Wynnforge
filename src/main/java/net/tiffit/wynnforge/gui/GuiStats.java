@@ -1,8 +1,5 @@
 package net.tiffit.wynnforge.gui;
 
-import java.io.IOException;
-import java.util.List;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
@@ -20,6 +17,9 @@ import net.minecraft.network.play.client.CPacketClickWindow;
 import net.minecraft.network.play.server.SPacketWindowItems;
 import net.minecraft.util.text.TextFormatting;
 import net.tiffit.wynnforge.WFNetHandler;
+
+import java.io.IOException;
+import java.util.List;
 
 public class GuiStats extends GuiScreen {
 

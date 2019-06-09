@@ -1,10 +1,10 @@
 package net.tiffit.wynnforge.utils;
 
-import static net.minecraftforge.common.config.Property.Type.STRING;
-
 import net.minecraftforge.common.config.ConfigCategory;
 import net.minecraftforge.common.config.Property;
 import net.minecraftforge.common.config.Property.Type;
+
+import static net.minecraftforge.common.config.Property.Type.STRING;
 
 public class ConfigHelper {
 

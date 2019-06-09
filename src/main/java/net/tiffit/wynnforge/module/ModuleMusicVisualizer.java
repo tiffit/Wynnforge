@@ -1,7 +1,5 @@
 package net.tiffit.wynnforge.module;
 
-import java.awt.Color;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
@@ -10,6 +8,8 @@ import net.minecraftforge.client.event.sound.SoundEvent.SoundSourceEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.tiffit.wynnforge.module.ModuleBase.ModuleClass;
 import net.tiffit.wynnforge.utils.WFUtils;
+
+import java.awt.*;
 
 @ModuleClass
 public class ModuleMusicVisualizer extends ModuleBase {

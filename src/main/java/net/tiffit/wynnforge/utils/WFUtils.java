@@ -1,7 +1,5 @@
 package net.tiffit.wynnforge.utils;
 
-import org.lwjgl.opencl.api.Filter;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.renderer.BufferBuilder;
@@ -10,6 +8,7 @@ import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.TextFormatting;
+import org.lwjgl.opencl.api.Filter;
 
 public class WFUtils {
 

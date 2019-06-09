@@ -1,12 +1,12 @@
 package net.tiffit.wynnforge.data;
 
-import java.io.File;
-import java.io.IOException;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.nbt.CompressedStreamTools;
 import net.minecraft.nbt.NBTTagCompound;
 import net.tiffit.wynnforge.module.ModuleBase;
+
+import java.io.File;
+import java.io.IOException;
 
 public class LocalData {
 

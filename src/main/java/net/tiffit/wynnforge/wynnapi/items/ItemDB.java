@@ -1,12 +1,11 @@
 package net.tiffit.wynnforge.wynnapi.items;
 
+import com.google.gson.JsonObject;
+import net.tiffit.wynnforge.Wynnforge;
+
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
-
-import com.google.gson.JsonObject;
-
-import net.tiffit.wynnforge.Wynnforge;
 
 public class ItemDB {
 	

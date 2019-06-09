@@ -1,11 +1,6 @@
 package net.tiffit.wynnforge.module;
 
-import java.util.List;
-
-import org.lwjgl.input.Keyboard;
-
 import com.google.common.collect.Lists;
-
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.text.TextFormatting;
@@ -16,6 +11,9 @@ import net.tiffit.wynnforge.module.ModuleBase.ModuleClass;
 import net.tiffit.wynnforge.utils.WFUtils;
 import net.tiffit.wynnforge.wynnapi.items.ItemDB;
 import net.tiffit.wynnforge.wynnapi.items.WynnItem;
+import org.lwjgl.input.Keyboard;
+
+import java.util.List;
 
 @ModuleClass
 public class ModuleUnidentifiedPredictor extends ModuleBase {

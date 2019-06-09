@@ -1,8 +1,5 @@
 package net.tiffit.wynnforge.module;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.EntityRenderer;
 import net.minecraft.client.renderer.entity.RenderManager;
@@ -12,6 +9,9 @@ import net.minecraftforge.client.event.RenderPlayerEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.tiffit.wynnforge.data.FriendsManager;
 import net.tiffit.wynnforge.module.ModuleBase.ModuleClass;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @ModuleClass
 public class ModulePlayerInfo extends ModuleBase {

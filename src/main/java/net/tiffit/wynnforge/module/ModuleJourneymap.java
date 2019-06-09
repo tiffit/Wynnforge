@@ -1,14 +1,14 @@
 package net.tiffit.wynnforge.module;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 import net.minecraft.util.text.ChatType;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.tiffit.wynnforge.module.ModuleBase.ModuleClass;
 import net.tiffit.wynnforge.utils.ConfigHelper;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @ModuleClass(reqMod = "journeymap")
 public class ModuleJourneymap extends ModuleBase {

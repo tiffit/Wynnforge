@@ -1,10 +1,5 @@
 package net.tiffit.wynnforge.module;
 
-import java.util.Arrays;
-import java.util.List;
-
-import org.lwjgl.input.Keyboard;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.settings.KeyBinding;
@@ -22,6 +17,10 @@ import net.tiffit.wynnforge.Wynnforge;
 import net.tiffit.wynnforge.module.ModuleBase.ModuleClass;
 import net.tiffit.wynnforge.utils.ConfigHelper;
 import net.tiffit.wynnforge.utils.PotionInfo;
+import org.lwjgl.input.Keyboard;
+
+import java.util.Arrays;
+import java.util.List;
 
 @ModuleClass
 public class ModuleQuickDrop extends ModuleBase {

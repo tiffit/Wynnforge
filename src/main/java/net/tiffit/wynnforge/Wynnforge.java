@@ -1,15 +1,7 @@
 package net.tiffit.wynnforge;
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
-
-import org.apache.logging.log4j.Logger;
-
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-
 import io.netty.channel.ChannelPipeline;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiMultiplayer;
@@ -26,25 +18,29 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.discovery.ASMDataTable.ASMData;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
-import net.minecraftforge.fml.common.event.FMLLoadCompleteEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.network.FMLNetworkEvent.ClientConnectedToServerEvent;
 import net.tiffit.wynnforge.data.FriendsManager;
 import net.tiffit.wynnforge.data.LocalData;
-import net.tiffit.wynnforge.data.WynnforgeServerConnector;
 import net.tiffit.wynnforge.module.ModuleBase;
 import net.tiffit.wynnforge.module.ModuleBase.ModuleClass;
 import net.tiffit.wynnforge.utils.ConfigHelper;
 import net.tiffit.wynnforge.wynnapi.items.ItemDB;
 import net.tiffit.wynnforge.wynnapi.territories.TerritoryDB;
+import org.apache.logging.log4j.Logger;
+
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
 
 @Mod(modid = Wynnforge.MODID, name = Wynnforge.NAME, version = Wynnforge.VERSION, clientSideOnly = true, dependencies = "before:journeymap;", guiFactory = Wynnforge.CONFIG_GUI_FACTORY)
 public class Wynnforge {
 	public static final String MODID = "wynnforge";
 	public static final String NAME = "Wynnforge";
-	public static final String VERSION = "0.3.1";
+	public static final String VERSION = "0.3.2";
 	public static final String CONFIG_GUI_FACTORY = "net.tiffit.wynnforge.gui.config.ConfigGuiFactory";
 
 	private static List<ModuleBase> MODULES = new ArrayList<ModuleBase>();
@@ -114,11 +110,6 @@ public class Wynnforge {
 
 	@EventHandler
 	public void postInit(FMLPostInitializationEvent event) {
-	}
-	
-	@EventHandler
-	public void finishLoad(FMLLoadCompleteEvent e){
-		WynnforgeServerConnector.connectWynnforgeServer();
 	}
 
 	@SubscribeEvent

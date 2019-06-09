@@ -1,7 +1,5 @@
 package net.tiffit.wynnforge.module;
 
-import org.lwjgl.input.Keyboard;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.command.CommandException;
@@ -19,6 +17,7 @@ import net.tiffit.wynnforge.gui.compass.GuiCompass;
 import net.tiffit.wynnforge.module.ModuleBase.ModuleClass;
 import net.tiffit.wynnforge.utils.WFCommand;
 import net.tiffit.wynnforge.utils.WFUtils;
+import org.lwjgl.input.Keyboard;
 
 @ModuleClass
 public class ModuleUsefulCompass extends ModuleBase {

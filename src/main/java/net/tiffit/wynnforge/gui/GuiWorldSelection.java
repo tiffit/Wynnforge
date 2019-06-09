@@ -1,12 +1,6 @@
 package net.tiffit.wynnforge.gui;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map.Entry;
-
+import com.jcraft.jogg.Page;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.GuiButton;
@@ -23,6 +17,14 @@ import net.minecraft.util.text.TextFormatting;
 import net.tiffit.wynnforge.WFNetHandler;
 import net.tiffit.wynnforge.data.FriendsManager;
 import net.tiffit.wynnforge.wynnapi.PlayerList;
+import org.lwjgl.input.Mouse;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map.Entry;
 
 public class GuiWorldSelection extends GuiScreen {
 
@@ -30,7 +32,14 @@ public class GuiWorldSelection extends GuiScreen {
 	private EntityPlayer player;
 
 	private static int prevServer = -1;
+	private int page = 0;
+	private int max_page;
+	private int worlds_per_page = 10;
+	private int worlds_in_page;
+	private int index;
 	private boolean prevWorldThisInstance = false;
+
+	private PageButton previous, next;
 
 	private LinkedHashMap<Integer, WorldInfo> worlds = new LinkedHashMap<Integer, WorldInfo>();
 	private LinkedHashMap<Integer, List<String>> friends = new LinkedHashMap<Integer, List<String>>();
@@ -55,19 +64,35 @@ public class GuiWorldSelection extends GuiScreen {
 				this.friends.put(info.world, friends);
 			}
 		}
+		max_page = worlds.size()/worlds_per_page;
 	}
 
 	@Override
 	public void initGui() {
-		Iterator<Entry<Integer, WorldInfo>> entries = worlds.entrySet().iterator();
-		for (int i = 0; i < worlds.size(); i++) {
-			Entry<Integer, WorldInfo> entry = entries.next();
-			buttonList.add(new WorldButton(width / 2 - 100, height / 2 + i * 21 - worlds.size() * 20 / 2, 200, 20, entry.getValue(), entry.getKey()));
-		}
+		buttonList.clear();
 		List<ItemStack> allItems = packet.getItemStacks();
 		buttonList.add(new CategoryButton(width/2 - 25, allItems.get(35), 35));
 		buttonList.add(new CategoryButton(width/2, allItems.get(35 + 9), 35 + 9));
 		buttonList.add(new CategoryButton(width/2 + 25, allItems.get(35 + 9*2), 35 + 9*2));
+		buttonList.add(previous = new PageButton(-1, width/2-100, (height+worlds_per_page*21)/2, 99, 20));
+		buttonList.add(next = new PageButton(1, width/2+1, (height+worlds_per_page*21)/2, 99, 20));
+		setWorldButtons();
+	}
+
+	private void setWorldButtons(){
+		buttonList.removeIf((b) -> b instanceof WorldButton);
+		index = page*worlds_per_page;
+		worlds_in_page = Math.min(worlds_per_page, worlds.size()-index);
+		for (int i = index; i < index+worlds_in_page; i++) {
+			Iterator<Entry<Integer, WorldInfo>> iterator = worlds.entrySet().iterator();
+			List<Entry<Integer, WorldInfo>> entries = new ArrayList<>();
+			iterator.forEachRemaining(entries::add);
+			int offset = i - index;
+			Entry<Integer, WorldInfo> entry = entries.get(i);
+			buttonList.add(new WorldButton(width / 2 - 100, height / 2 + offset * 21 - worlds_in_page * 20 / 2 - 10, 200, 20, entry.getValue(), entry.getKey()));
+		}
+		previous.enabled = page > 0;
+		next.enabled = page < max_page;
 	}
 
 	@Override
@@ -85,13 +110,16 @@ public class GuiWorldSelection extends GuiScreen {
 			ItemStack click = con.slotClick(button.id, 0, ClickType.PICKUP, player);
 			short nextId = con.getNextTransactionID(player.inventory);
 			WFNetHandler.INSTANCE.sendPacket(new CPacketClickWindow(packet.getWindowId(), button.id, 0, ClickType.PICKUP, click, nextId));
+		}else if(button instanceof PageButton){
+			page += button.id;
+			setWorldButtons();
 		}
 	}
 
 	@Override
 	public void drawScreen(int mouseX, int mouseY, float partialTicks) {
 		drawDefaultBackground();
-		drawCenteredString(fontRenderer, "World Selection", width / 2, height / 2 - worlds.size() * 20 / 2 - 12, 0xffffffff);
+		drawCenteredString(fontRenderer, "World Selection (Page " + (page+1) + "/"+(max_page+1)+")", width / 2, height / 2 - worlds_per_page * 20 / 2 - 22, 0xffffffff);
 		super.drawScreen(mouseX, mouseY, partialTicks);
 		for (GuiButton button : buttonList) {
 			if (button instanceof WorldButton && button.isMouseOver()) {
@@ -161,7 +189,6 @@ public class GuiWorldSelection extends GuiScreen {
 				drawString(fr, text, x - 60, y + 6, 0xff55aaff);
 			}
 		}
-
 	}
 	
 	private class CategoryButton extends GuiButton {
@@ -184,7 +211,13 @@ public class GuiWorldSelection extends GuiScreen {
 			}
 			GlStateManager.popMatrix();
 		}
+	}
 
+	private class PageButton extends GuiButton {
+
+		public PageButton(int id, int x, int y, int width, int height) {
+			super(id, x, y, width, height, id == -1 ? "<-- Previous Page" : "Next Page -->");
+		}
 	}
 
 }

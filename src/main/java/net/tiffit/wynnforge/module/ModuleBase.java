@@ -1,15 +1,15 @@
 package net.tiffit.wynnforge.module;
 
+import net.minecraft.command.ICommand;
+import net.minecraftforge.client.ClientCommandHandler;
+import net.tiffit.wynnforge.utils.ConfigHelper;
+import net.tiffit.wynnforge.utils.WFCommand;
+
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 import java.util.Map;
-
-import net.minecraft.command.ICommand;
-import net.minecraftforge.client.ClientCommandHandler;
-import net.tiffit.wynnforge.utils.ConfigHelper;
-import net.tiffit.wynnforge.utils.WFCommand;
 
 public class ModuleBase {
 

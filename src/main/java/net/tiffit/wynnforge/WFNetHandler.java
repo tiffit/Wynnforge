@@ -1,21 +1,12 @@
 package net.tiffit.wynnforge;
 
 import com.mojang.authlib.GameProfile;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.network.NetHandlerPlayClient;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.Packet;
-import net.minecraft.network.play.client.CPacketAnimation;
-import net.minecraft.network.play.client.CPacketPlayerTryUseItem;
-import net.minecraft.network.play.server.SPacketChat;
-import net.minecraft.network.play.server.SPacketOpenWindow;
-import net.minecraft.network.play.server.SPacketPlayerListItem;
-import net.minecraft.network.play.server.SPacketResourcePackSend;
-import net.minecraft.network.play.server.SPacketSoundEffect;
-import net.minecraft.network.play.server.SPacketSpawnPlayer;
-import net.minecraft.network.play.server.SPacketWindowItems;
+import net.minecraft.network.play.server.*;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.eventhandler.EventBus;
 

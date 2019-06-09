@@ -1,7 +1,5 @@
 package net.tiffit.wynnforge.module;
 
-import org.lwjgl.input.Keyboard;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.ScaledResolution;
@@ -26,6 +24,7 @@ import net.tiffit.wynnforge.Wynnforge;
 import net.tiffit.wynnforge.module.ModuleBase.ModuleClass;
 import net.tiffit.wynnforge.utils.PlayerClass;
 import net.tiffit.wynnforge.utils.WFUtils;
+import org.lwjgl.input.Keyboard;
 
 @ModuleClass
 public class ModuleSpells extends ModuleBase {

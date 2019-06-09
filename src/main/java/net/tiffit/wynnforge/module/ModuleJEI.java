@@ -1,15 +1,10 @@
 package net.tiffit.wynnforge.module;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
 import mezz.jei.api.ingredients.VanillaTypes;
 import net.minecraft.inventory.ItemStackHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
-import net.minecraft.nbt.NBTUtil;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -18,6 +13,10 @@ import net.tiffit.wynnforge.data.LocalData;
 import net.tiffit.wynnforge.module.ModuleBase.ModuleClass;
 import net.tiffit.wynnforge.support.PluginJEI;
 import net.tiffit.wynnforge.utils.WFUtils;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 @ModuleClass(reqMod = "jei")
 public class ModuleJEI extends ModuleBase {

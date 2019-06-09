@@ -1,11 +1,5 @@
 package net.tiffit.wynnforge.module;
 
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
@@ -18,6 +12,12 @@ import net.tiffit.wynnforge.module.ModuleBase.ModuleClass;
 import net.tiffit.wynnforge.utils.ConfigHelper;
 import net.tiffit.wynnforge.utils.PotionInfo;
 import net.tiffit.wynnforge.utils.WFUtils;
+
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 
 @ModuleClass
 public class ModuleInfo extends ModuleBase {

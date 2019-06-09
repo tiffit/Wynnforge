@@ -1,15 +1,5 @@
 package net.tiffit.wynnforge.module;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.text.DecimalFormat;
-import java.util.ArrayList;
-import java.util.List;
-
-import org.lwjgl.input.Keyboard;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.resources.IResourceManager;
@@ -25,6 +15,15 @@ import net.minecraftforge.fml.common.gameevent.InputEvent.KeyInputEvent;
 import net.tiffit.wynnforge.Wynnforge;
 import net.tiffit.wynnforge.data.LocalData;
 import net.tiffit.wynnforge.module.ModuleBase.ModuleClass;
+import org.lwjgl.input.Keyboard;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.List;
 
 @ModuleClass
 public class ModuleXpPercent extends ModuleBase {

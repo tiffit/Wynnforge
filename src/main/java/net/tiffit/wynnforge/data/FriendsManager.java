@@ -1,8 +1,5 @@
 package net.tiffit.wynnforge.data;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
@@ -17,6 +14,9 @@ import net.tiffit.wynnforge.PacketRecieveEvent;
 import net.tiffit.wynnforge.WFNetHandler;
 import net.tiffit.wynnforge.Wynnforge;
 import net.tiffit.wynnforge.utils.WFUtils;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Mod.EventBusSubscriber
 public class FriendsManager {
@@ -49,7 +49,7 @@ public class FriendsManager {
 			interceptRequest = false;
 			e.setCanceled(true);
 		}else if (e.getType() == ChatType.SYSTEM && intercept) {
-			if (text.startsWith(Minecraft.getMinecraft().player.getName() + "' friends (")) {
+			if (text.startsWith(Minecraft.getMinecraft().player.getName() + "'s friends (")) {
 				intercept = false;
 				e.setCanceled(true);
 				boolean changed = false;
